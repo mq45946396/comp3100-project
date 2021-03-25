@@ -27,6 +27,9 @@ public class Client {
 
 	// TODO
 
+	System.out.println(read(in));
+	socket.close();
+
     }
 
     /**
@@ -34,7 +37,7 @@ public class Client {
      *	@param str The command to send in the stream.
      *	@param out The target stream to write the command to.
      */
-    public void send(String str, OutputStream out) {
+    static void send(String str, OutputStream out) throws IOException {
 	byte[] buf = str.getBytes();
 	out.write(buf);
 	out.flush();
@@ -46,7 +49,7 @@ public class Client {
      *	@param in The stream to read the command string from.
      *	@return The command string from the stream.
      */
-    public String read(InputStream in) {
+    static String read(InputStream in) throws IOException {
         byte[] buf = new byte[1024];
 	int nBytes = in.read(buf);
 	return new String(buf, 0, nBytes);
