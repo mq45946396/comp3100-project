@@ -6,7 +6,7 @@ import java.net.*;
  *    COMP3100, March 2021
  *
  *    by Jack Davenport (45946396)
- *       Lucas Turnbull (????????)
+ *       Lucas Turnbull (45947155)
  *       Elliot Holt    (????????)
  */
 public class Client {
