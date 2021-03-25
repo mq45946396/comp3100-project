@@ -8,7 +8,7 @@ Repository for COMP3100 Project
 |Elliot Holt|????????|
 
 ## Helpful Links
-[Stage 1 specification (via iLearn)](https://content.ilearn.mq.edu.au/f0/a6/f0a66a9723ea381960d08693438495012fe8256f?response-content-disposition=inline%3Bfilename%3D%22stage1_vanillaClientSimulator.pdf)
+[Stage 1 specification (via iLearn)](https://ilearn.mq.edu.au/mod/resource/view.php?id=6384214)
 
 [ds-sim User Guide and Protocol](https://github.com/distsys-MQ/ds-sim/blob/master/docs/ds-sim_user-guide.pdf)
 
