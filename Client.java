@@ -7,7 +7,7 @@ import java.net.*;
  *
  *    by Jack Davenport (45946396)
  *       Lucas Turnbull (45947155)
- *       Elliot Holt    (????????)
+ *       Elliot Holt    (45955964)
  */
 public class Client {
 

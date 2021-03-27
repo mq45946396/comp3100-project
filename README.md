@@ -5,7 +5,7 @@ Repository for COMP3100 Project
 |------------|----------|
 |Jack Davenport|45946396|
 |Lucas Turnbull|45947155|
-|Elliot Holt|????????|
+|Elliot Holt|45955964|
 
 ## Helpful Links
 [Stage 1 specification (via iLearn)](https://ilearn.mq.edu.au/mod/resource/view.php?id=6384214)
