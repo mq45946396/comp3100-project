@@ -19,7 +19,12 @@ Repository for COMP3100 Project
 ```sh
 $ git clone https://github.com/mq45946396/comp3100-project.git
 $ cd comp3100-project
-$ ./compile.sh # compile Client.java
+$ make         # compile all Java classes
 $ ds-server    # start a ds-server instance
 $ ./run.sh     # run the client
+```
+
+To remove built class files from the project:
+```sh
+$ make clean
 ```

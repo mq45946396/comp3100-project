@@ -19,6 +19,8 @@ public class Client {
 
     public static void main(String[] args) throws Exception {
 
+        Test.print();
+
         // open socket
         Socket socket = new Socket(HOST, PORT);
         InputStream in = socket.getInputStream();
@@ -31,6 +33,7 @@ public class Client {
 
         System.out.println(read(in));
         socket.close();
+        in.close();
 
     }
 
