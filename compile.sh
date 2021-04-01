@@ -1,2 +1,2 @@
 #!/bin/bash
-javac Client.java
+find . -name "*.java" -print | xargs javac

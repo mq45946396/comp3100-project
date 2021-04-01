@@ -1,2 +1,2 @@
 #!/bin/bash
-java Client
+java comp3100.Client
