@@ -18,17 +18,17 @@ public class Client {
     public static void main(String[] args) throws Exception {
 
         // open socket
-	Socket socket = new Socket(HOST, PORT);
-	InputStream in = socket.getInputStream();
-	OutputStream out = socket.getOutputStream();
+        Socket socket = new Socket(HOST, PORT);
+        InputStream in = socket.getInputStream();
+        OutputStream out = socket.getOutputStream();
 
-	// begin handshake
-	send("HELO", out);
+        // begin handshake
+        send("HELO", out);
 
-	// TODO
+        // TODO
 
-	System.out.println(read(in));
-	socket.close();
+        System.out.println(read(in));
+        socket.close();
 
     }
 
@@ -38,9 +38,9 @@ public class Client {
      *	@param out The target stream to write the command to.
      */
     static void send(String str, OutputStream out) throws IOException {
-	byte[] buf = str.getBytes();
-	out.write(buf);
-	out.flush();
+        byte[] buf = str.getBytes();
+        out.write(buf);
+        out.flush();
     }
 
     /**
@@ -51,8 +51,8 @@ public class Client {
      */
     static String read(InputStream in) throws IOException {
         byte[] buf = new byte[1024];
-	int nBytes = in.read(buf);
-	return new String(buf, 0, nBytes);
+        int nBytes = in.read(buf);
+        return new String(buf, 0, nBytes);
     }
 
 }
