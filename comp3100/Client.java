@@ -4,7 +4,7 @@ import java.io.*;
 
 /**
  *    DS-CLIENT IMPLEMENTATION
- *    COMP3100, March 2021
+ *    COMP3100, April 2021
  *
  *    by Jack Davenport (45946396)
  *       Lucas Turnbull (45947155)
