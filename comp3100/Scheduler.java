@@ -17,9 +17,13 @@ public class Scheduler {
         // pick the best server based on availability and core count
         Server bestServer = pickBestServer(servers, cores);
 
-        // send back schedule command
+        // if a server is picked, send back schedule command
         if(bestServer != null) {
-            
+            String fullServerName = bestServer.serverType + " " + bestServer.serverID;
+            conn.sendf("SCHD %d %s", jobID, fullServerName);
+            System.out.printf("[Job %d] Scheduled on %s (t = $d)\n", jobID, fullServerName, submitTime);
+        } else {
+            System.out.printf("[Job %d] Could not find server to schedule!", jobID);
         }
 
         // indicate that we are ready for more work
