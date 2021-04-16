@@ -30,6 +30,12 @@ public class Scheduler {
         conn.send("REDY");
     }
 
+    /**
+     * Gets all servers and their current status from the server connection.
+     * Interally uses the 'GETS All' command to read information from the simulator.
+     * @param conn The connection to read from.
+     * @return Array of servers with their data.
+     */
     private static Server[] getAllServers(Connection conn) {
         /**
          *  For Lucas to complete only
@@ -40,6 +46,16 @@ public class Scheduler {
         return null;
     }
 
+    /**
+     * Chooses the most appropriate server for the given job. It should skip any servers
+     * which do not meet the minimum requirements, and then return the server with the highest
+     * core count.
+     * @param servers The list of servers to choose from.
+     * @param jobCores The number of cores required by the job.
+     * @param jobMemory The amount of memory required by the job.
+     * @param jobDisk The amount of disk usage required by the job.
+     * @return The best available server to schedule the job on, or null if none can be found.
+     */
     private static Server pickBestServer(Server[] servers, int jobCores, int jobMemory, int jobDisk) {
         /**
          *  For Lucas to complete only
