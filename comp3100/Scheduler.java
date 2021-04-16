@@ -11,7 +11,7 @@ public class Scheduler {
          */
     }
 
-    private static Server[] getAllServers() {
+    private static Server[] getAllServers(Connection conn) {
         /**
          *  For Lucas to complete only
          *
