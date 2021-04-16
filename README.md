@@ -1,7 +1,7 @@
 # comp3100-project
 Repository for COMP3100 Project
 
-|Student Name|Student ID|GitHub Profiles|
+|Student Name|Student ID|GitHub Profile|
 |------------|----------|---------------|
 |Jack Davenport|45946396|[mq45946396](https://github.com/mq45946396)|
 |Lucas Turnbull|45947155|[EccentricTortoise](https://github.com/EccentricTortoise)|

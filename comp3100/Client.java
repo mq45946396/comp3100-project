@@ -41,7 +41,8 @@ public class Client {
             switch(cmd) { 
                 case "NONE":
                     quit = true;
-                    break;
+                    break
+                case "SCHD":
                 default:
                     conn.sendf("ERR Unknown command: %s", cmd);
                     break;
