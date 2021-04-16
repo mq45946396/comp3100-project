@@ -42,7 +42,9 @@ public class Client {
                 case "NONE":
                     quit = true;
                     break
-                case "SCHD":
+                case "JOBN":
+                    Scheduler.scheduleJob(conn, params);
+                    break;
                 default:
                     conn.sendf("ERR Unknown command: %s", cmd);
                     break;

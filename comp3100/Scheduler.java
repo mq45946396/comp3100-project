@@ -2,13 +2,10 @@ package comp3100;
 
 public class Scheduler {
 
-    private static void scheduleJob(Connection conn, String[] args) throws Exception {
-        /**
-         *  For Jack to complete only
-         *
-         *  To ensure there's no possibility of merge conflicts, don't edit this method
-         *  unless you're Jack and on Jack's branch.
-         */
+    public static void scheduleJob(Connection conn, String[] args) throws Exception {
+        for(int i = 0; i < args.length; i++) {
+            System.out.println(args[i]);
+        }
     }
 
     private static Server[] getAllServers(Connection conn) {
