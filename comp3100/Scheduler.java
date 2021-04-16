@@ -21,7 +21,7 @@ public class Scheduler {
         return null;
     }
 
-    private static Server pickBestServer(Server server) {
+    private static Server pickBestServer(Server[] servers, int jobCores) {
         /**
          *  For Lucas to complete only
          *
