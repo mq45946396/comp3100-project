@@ -1,11 +1,11 @@
 # comp3100-project
 Repository for COMP3100 Project
 
-|Student Name|Student ID|
-|------------|----------|
-|Jack Davenport|45946396|
-|Lucas Turnbull|45947155|
-|Elliot Holt|45955964|
+|Student Name|Student ID|GitHub Profiles|
+|------------|----------|---------------|
+|Jack Davenport|45946396|[mq45946396](https://github.com/mq45946396)|
+|Lucas Turnbull|45947155|[EccentricTortoise](https://github.com/EccentricTortoise)|
+|Elliot Holt|45955964|[AuzEll](https://github.com/AuzEll)|
 
 ## Helpful Links
 [Stage 1 specification (via iLearn)](https://ilearn.mq.edu.au/mod/resource/view.php?id=6384214)

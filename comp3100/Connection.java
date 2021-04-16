@@ -34,10 +34,8 @@ public class Connection {
     }
 
     protected void end() throws Exception {
-        // send quit command
+        // send quit command and close socket
         send("QUIT");
-
-        // close the socket
         in.close();
         out.close();
         socket.close();
