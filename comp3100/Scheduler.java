@@ -8,14 +8,14 @@ public class Scheduler {
         int jobID = Integer.parseInt(args[1]);
         // int estRuntime = Integer.parseInt(args[2]);
         int cores = Integer.parseInt(args[3]);
-        // int memory = Integer.parseInt(args[4]);
-        // int disk = Integer.parseInt(args[5]);
+        int memory = Integer.parseInt(args[4]);
+        int disk = Integer.parseInt(args[5]);
 
         // get list of servers and their current status
         Server[] servers = getAllServers(conn);
 
         // pick the best server based on availability and core count
-        Server bestServer = pickBestServer(servers, cores);
+        Server bestServer = pickBestServer(servers, cores, memory, disk);
 
         // if a server is picked, send back schedule command
         if(bestServer != null) {
@@ -30,7 +30,6 @@ public class Scheduler {
         conn.send("REDY");
     }
 
-    @SuppressWarnings("unused")
     private static Server[] getAllServers(Connection conn) {
         /**
          *  For Lucas to complete only
@@ -41,8 +40,7 @@ public class Scheduler {
         return null;
     }
 
-    @SuppressWarnings("unused")
-    private static Server pickBestServer(Server[] servers, int jobCores) {
+    private static Server pickBestServer(Server[] servers, int jobCores, int jobMemory, int jobDisk) {
         /**
          *  For Lucas to complete only
          *
