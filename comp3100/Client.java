@@ -35,6 +35,7 @@ public class Client {
                 cmd = cmd.substring(0, cmd.indexOf(" "));
                 params = cmd.substring(cmd.indexOf(" ")+1).split(" ");
             }
+            System.out.println(cmd);
             // choose behaviour based on command
             switch(cmd) { 
                 case "NONE":
