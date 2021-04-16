@@ -1,7 +1,5 @@
 package comp3100;
 
-import java.io.*;
-
 /**
  *    DS-CLIENT IMPLEMENTATION
  *    COMP3100, April 2021
@@ -41,7 +39,7 @@ public class Client {
             switch(cmd) { 
                 case "NONE":
                     quit = true;
-                    break
+                    break;
                 case "JOBN":
                     Scheduler.scheduleJob(conn, params);
                     break;

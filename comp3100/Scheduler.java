@@ -8,6 +8,7 @@ public class Scheduler {
         }
     }
 
+    @SuppressWarnings("unused")
     private static Server[] getAllServers(Connection conn) {
         /**
          *  For Lucas to complete only
@@ -18,6 +19,7 @@ public class Scheduler {
         return null;
     }
 
+    @SuppressWarnings("unused")
     private static Server pickBestServer(Server[] servers, int jobCores) {
         /**
          *  For Lucas to complete only
