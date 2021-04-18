@@ -84,7 +84,7 @@ public class Scheduler {
                     Server[] val = new Server[(moreInput.length+1)/9];
                     val[0].type = input;
                     val[0].id = Integer.valueOf(moreInput[0]);
-                    val[0].state = 
+                    val[0].state = moreInput[1];
                 }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
