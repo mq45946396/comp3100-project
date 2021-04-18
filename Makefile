@@ -1,7 +1,7 @@
 # based on this answer: https://stackoverflow.com/a/29438033
 
 JAVAC = javac
-SOURCES = $(shell find . -type f -name '*.java')
+SOURCES = comp3100/Client.java
 CLASSES = $(SOURCES:.java=.class)
 
 all: $(CLASSES)
