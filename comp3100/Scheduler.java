@@ -124,7 +124,16 @@ public class Scheduler {
         filtered = Arrays.asList(filtered.stream().filter(s -> s.disk >= jobDisk).toArray(Server[]::new));
         if (!filtered.isEmpty()) {
             Collections.sort(filtered);
-            return filtered.get(0);
+            Server val = filtered.get(0);
+            if (!val.state.equals("inactive") && !val.state.equals("idle")) {
+                for (int i = 0; i < filtered.size(); i++) {
+                    if (val.state.equals("inactive") && val.state.equals("idle")) {
+                        val = filtered.get(i);
+                        return val;
+                    }
+                }
+            }
+            return null;
         }
         else {
             return null;
