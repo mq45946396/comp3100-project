@@ -36,13 +36,13 @@ for conf in $configDir/*.xml; do
 	echo ----------------
 	echo "running the reference implementation (./ds-client)..."
 	sleep 1
-	./ds-server -c $conf -v brief -n > $conf.ref.log&
+	./ds-server -c $conf -v brief > $conf.ref.log&
 	sleep 4
-	./ds-client -n
+	./ds-client
 	
 	echo "running your implementation ($yourClient $@)..."
 	sleep 2
-	./ds-server -c $conf -v brief -n > $conf.your.log&
+	./ds-server -c $conf -v brief > $conf.your.log&
 	sleep 4
 	java $@ $(sed 's/\.class//' <<< $yourClient)
 	sleep 1
