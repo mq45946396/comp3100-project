@@ -68,11 +68,11 @@ public class Scheduler {
             try {
                 input = conn.read();
                 if (input.contains(" ")) {
-                    input = input.substring(0, input.indexOf(" "));
                     moreInput = input.substring(input.indexOf(" ")+1).split(" ");
+                    input = input.substring(0, input.indexOf(" "));
                 }
 
-                if (input == "DATA") {
+                if (input.equals("DATA")) {
                     conn.send("OK");
                 }
                 else {
