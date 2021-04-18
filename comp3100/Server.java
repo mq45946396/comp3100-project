@@ -4,11 +4,11 @@ import java.io.*;
 import java.net.*;
 
 public class Server {
-    private static final int INACTIVE = 0;
-    private static final int BOOTING = 1;
-    private static final int IDLE = 2;
-    private static final int ACTIVE = 3;
-    private static final int UNAVAILABLE = 4;
+    private static final String INACTIVE = "inactive";
+    private static final String BOOTING = "booting";
+    private static final String IDLE = "idle";
+    private static final String ACTIVE = "active";
+    private static final String UNAVAILABLE = "unavailable";
 
     public String type = "";
     public int id = 0;
