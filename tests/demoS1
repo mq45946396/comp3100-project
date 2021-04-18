@@ -20,11 +20,11 @@ if [ $# -lt 1 ]; then
 	exit
 fi
 
-if [ ! -f $1 ]; then
-	echo "No $1 found!"
-	echo "Usage: $0 your_client [user-specified argument...]"
-	exit
-fi
+#if [ ! -f $1 ]; then
+#	echo "No $1 found!"
+#	echo "Usage: $0 your_client [user-specified argument...]"
+#	exit
+#fi
 
 trap "kill 0" EXIT
 
