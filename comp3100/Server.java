@@ -18,12 +18,12 @@ public class Server implements Comparable<Server>{
     public float hourlyRate = 0;
     
     // TODO: add these fields: state, curStartTime
-    public int state = INACTIVE;
+    public String state = INACTIVE;
     public int curStartTime = 0;
 
     // TODO: add constructor to set these fields
     public Server(String type, int id, int core, int mem, int disk, int limit, 
-    int bootupTime, float hourlyRate, int state, int curStartTime) {
+    int bootupTime, float hourlyRate, String state, int curStartTime) {
         this.type = type;
         this.id = id;
         this.core = core;

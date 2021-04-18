@@ -48,11 +48,6 @@ public class Scheduler {
          *  To ensure there's no possibility of merge conflicts, don't edit this method
          *  unless you're Lucas and on Lucas' branch.
          */
-        final int INACTIVE = 0;
-        final int BOOTING = 1;
-        final int IDLE = 2;
-        final int ACTIVE = 3;
-        final int UNAVAILABLE = 4;
 
         boolean response = false;
         boolean sent = false;
@@ -85,6 +80,24 @@ public class Scheduler {
                     val[0].type = input;
                     val[0].id = Integer.valueOf(moreInput[0]);
                     val[0].state = moreInput[1];
+                    val[0].curStartTime = Integer.valueOf(moreInput[2]);
+                    val[0].core = Integer.valueOf(moreInput[3]);
+                    val[0].mem = Integer.valueOf(moreInput[4]);
+                    val[0].disk = Integer.valueOf(moreInput[5]);
+                    if (val.length > 8) {
+                        int j = 1;
+                        for (int i = 7; i <= val.length-3; i+=9) {
+                            val[j].type = input;
+                            val[j].id = Integer.valueOf(moreInput[0]);
+                            val[j].state = moreInput[1];
+                            val[j].curStartTime = Integer.valueOf(moreInput[2]);
+                            val[j].core = Integer.valueOf(moreInput[3]);
+                            val[j].mem = Integer.valueOf(moreInput[4]);
+                            val[j].disk = Integer.valueOf(moreInput[5]);
+                            j+=1;
+                        }
+                    }
+                    return val;
                 }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
