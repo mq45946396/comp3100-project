@@ -1,14 +1,7 @@
 package comp3100;
 
-import java.io.*;
-import java.net.*;
-
 public class Server implements Comparable<Server>{
     private static final String INACTIVE = "inactive";
-    private static final String BOOTING = "booting";
-    private static final String IDLE = "idle";
-    private static final String ACTIVE = "active";
-    private static final String UNAVAILABLE = "unavailable";
 
     public String type = "";
     public int id = 0;
@@ -17,11 +10,9 @@ public class Server implements Comparable<Server>{
     public int bootupTime = 0;
     public float hourlyRate = 0;
     
-    // TODO: add these fields: state, curStartTime
     public String state = INACTIVE;
     public int curStartTime = 0;
 
-    // TODO: add constructor to set these fields
     public Server(String type, int id, int core, int mem, int disk, int limit, 
     int bootupTime, float hourlyRate, String state, int curStartTime) {
         this.type = type;
@@ -43,34 +34,36 @@ public class Server implements Comparable<Server>{
         return this.core-s.core;
     }
 
-    public static void main(String[] args) {
-        try {
-            ServerSocket serverSocket = new ServerSocket(Client.PORT);
-            Socket clientSocket = serverSocket.accept();
+    // /* this method isn't needed */
+    // @Deprecated
+    // public static void main(String[] args) {
+    //     try {
+    //         ServerSocket serverSocket = new ServerSocket(Client.PORT);
+    //         Socket clientSocket = serverSocket.accept();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+    //         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    //         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
-            boolean quit = false;
-            while(!quit) {
-                String input = in.readLine();
-                String output = "";
+    //         boolean quit = false;
+    //         while(!quit) {
+    //             String input = in.readLine();
+    //             String output = "";
 
-                if (input.equals("HELO") || input.equals("AUTH " + Client.USER)) {
-                    out.write("OK");
-                    output = "OK";
-                }
-                if (input.equals("REDY")) {
-                    quit = true;
-                }
-                System.out.println("I receive: " + input);
-                System.out.println("You receive: " + output);
-            }
+    //             if (input.equals("HELO") || input.equals("AUTH " + Client.USER)) {
+    //                 out.write("OK");
+    //                 output = "OK";
+    //             }
+    //             if (input.equals("REDY")) {
+    //                 quit = true;
+    //             }
+    //             System.out.println("I receive: " + input);
+    //             System.out.println("You receive: " + output);
+    //         }
 
-            out.close();
-            serverSocket.close();
-            clientSocket.close();
-        } catch (Exception e){System.out.println(e);}
-    }
+    //         out.close();
+    //         serverSocket.close();
+    //         clientSocket.close();
+    //     } catch (Exception e){System.out.println(e);}
+    // }
 
 }

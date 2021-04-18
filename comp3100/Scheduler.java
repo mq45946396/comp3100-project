@@ -108,7 +108,7 @@ public class Scheduler {
     }
 
     /**
-     * Chooses the most appropriate server for the given job. It should skip any servers
+     * Chooses the most appropriate server for the given job (allToLargest). It should skip any servers
      * which do not meet the minimum requirements, and then return the server with the highest
      * core count.
      * @param servers The list of servers to choose from.
