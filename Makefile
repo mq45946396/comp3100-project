@@ -7,7 +7,7 @@ CLASSES = $(SOURCES:.java=.class)
 all: $(CLASSES)
 
 clean:
-	rm -f $(CLASSES)
+	rm -f $(shell find . -type f -name "*.class")
 
 $(CLASSES): $(SOURCES)
 	$(JAVAC) $<
