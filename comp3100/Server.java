@@ -3,7 +3,8 @@ package comp3100;
 import java.io.*;
 import java.net.*;
 
-public class Server {
+// LUCAS: Added the implements Comparable bit for scheduler.java
+public class Server implements Comparable<Server>{
     private static final int INACTIVE = 0;
     private static final int BOOTING = 1;
     private static final int IDLE = 2;
@@ -34,6 +35,14 @@ public class Server {
         this.hourlyRate = hourlyRate;
         this.state = state;
         this.curStartTime = curStartTime;
+    }
+
+    // LUCAS: added an override for compareTo() for finding the best server in scheduler.java
+    // LUCAS: Doesn't look pretty, but she'll be right
+    @Override
+    public int compareTo(Server s) {
+        // sorting in descending order so that it doesn't matter how long the server array is
+        return this.core-s.core + this.mem-this.mem + this.disk-this.disk;
     }
 
     public static void main(String[] args) {

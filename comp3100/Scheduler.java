@@ -1,5 +1,9 @@
 package comp3100;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Scheduler {
 
     public static void scheduleJob(Connection conn, String[] args) throws Exception {
@@ -19,7 +23,7 @@ public class Scheduler {
 
         // if a server is picked, send back schedule command
         if(bestServer != null) {
-            String fullServerName = bestServer.serverType + " " + bestServer.serverID;
+            String fullServerName = bestServer.type + " " + bestServer.id;
             conn.sendf("SCHD %d %s", jobID, fullServerName);
             System.out.printf("[Job %d] Scheduled on %s (t = $d)\n", jobID, fullServerName, submitTime);
         } else {
@@ -57,13 +61,17 @@ public class Scheduler {
      * @return The best available server to schedule the job on, or null if none can be found.
      */
     private static Server pickBestServer(Server[] servers, int jobCores, int jobMemory, int jobDisk) {
-        /**
-         *  For Lucas to complete only
-         *
-         *  To ensure there's no possibility of merge conflicts, don't edit this method
-         *  unless you're Lucas and on Lucas' branch.
-         */
-        return null;
+        List<Server> filtered = Arrays.asList(servers);
+        filtered = Arrays.asList(filtered.stream().filter(s -> s.core >= jobCores).toArray(Server[]::new));
+        filtered = Arrays.asList(filtered.stream().filter(s -> s.mem >= jobMemory).toArray(Server[]::new));
+        filtered = Arrays.asList(filtered.stream().filter(s -> s.disk >= jobDisk).toArray(Server[]::new));
+        if (!filtered.isEmpty()) {
+            Collections.sort(filtered);
+            return filtered.get(0);
+        }
+        else {
+            return null;
+        }
     }
     
 }
