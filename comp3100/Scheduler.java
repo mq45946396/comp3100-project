@@ -1,5 +1,6 @@
 package comp3100;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +48,49 @@ public class Scheduler {
          *  To ensure there's no possibility of merge conflicts, don't edit this method
          *  unless you're Lucas and on Lucas' branch.
          */
+        final int INACTIVE = 0;
+        final int BOOTING = 1;
+        final int IDLE = 2;
+        final int ACTIVE = 3;
+        final int UNAVAILABLE = 4;
+
+        boolean response = false;
+        boolean sent = false;
+        String input = "";
+        String[] moreInput = {};
+
+        while (!response) {
+            if (!sent) {
+                try {
+                    conn.sendf("GETS %s", "All");
+                    sent = true;
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+            try {
+                input = conn.read();
+                if (input.contains(" ")) {
+                    input = input.substring(0, input.indexOf(" "));
+                    moreInput = input.substring(input.indexOf(" ")+1).split(" ");
+                }
+
+                if (input == "DATA") {
+                    conn.send("OK");
+                }
+                else {
+                    Server[] val = new Server[(moreInput.length+1)/9];
+                    val[0].type = input;
+                    val[0].id = Integer.valueOf(moreInput[0]);
+                    val[0].state = 
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 

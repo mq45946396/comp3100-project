@@ -38,11 +38,10 @@ public class Server implements Comparable<Server>{
     }
 
     // LUCAS: added an override for compareTo() for finding the best server in scheduler.java
-    // LUCAS: Doesn't look pretty, but she'll be right
     @Override
     public int compareTo(Server s) {
         // sorting in descending order so that it doesn't matter how long the server array is
-        return this.core-s.core + this.mem-this.mem + this.disk-this.disk;
+        return this.core-s.core;
     }
 
     public static void main(String[] args) {
