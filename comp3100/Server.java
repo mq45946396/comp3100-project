@@ -3,7 +3,7 @@ package comp3100;
 import java.io.*;
 import java.net.*;
 
-public class Server {
+public class Server implements Comparable<Server>{
     private static final String INACTIVE = "inactive";
     private static final String BOOTING = "booting";
     private static final String IDLE = "idle";
