@@ -28,3 +28,10 @@ To remove built class files from the project:
 ```sh
 $ make clean
 ```
+
+To run the automated test files:
+```sh
+$ make
+$ cd tests
+$ ./run-test.sh
+```
