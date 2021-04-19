@@ -27,9 +27,12 @@ public class Scheduler {
         if(bestServer != null) {
             String fullServerName = bestServer.type + " " + bestServer.id;
             conn.sendf("SCHD %d %s", jobID, fullServerName);
-            System.out.printf("[Job %d] Scheduled on %s (t = $d)\n", jobID, fullServerName, submitTime);
+            if(!conn.read().equals("OK")) {
+                throw new RuntimeException("[Job " + jobID + "] Scheduling failed!");
+            }
+            System.out.printf("[Job %d] Scheduled on %s (t = %d)\n", jobID, fullServerName, submitTime);
         } else {
-            System.out.printf("[Job %d] Could not find server to schedule!", jobID);
+            System.out.printf("[Job %d] Could not find server to schedule!\n", jobID);
         }
 
         // indicate that we are ready for more work
@@ -45,7 +48,7 @@ public class Scheduler {
     private static Server[] getAllServers(Connection conn) {
         try {
             // LUCAS: send GETS command
-            conn.send("GETS ALL");
+            conn.send("GETS All");
 
             // LUCAS: read and parse data response
             String[] data = conn.read().split(" ");

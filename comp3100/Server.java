@@ -31,7 +31,7 @@ public class Server implements Comparable<Server>{
     @Override
     public int compareTo(Server s) {
         // sorting in descending order so that it doesn't matter how long the server array is
-        return this.core-s.core;
+        return s.core-this.core;
     }
 
     // /* this method isn't needed */
