@@ -64,12 +64,22 @@ public class Connection {
     /**
      *	Reads the command string from the server connection.
      *	This method will block until the entire string is received from the server.
+     *  @param max The maximum length of the string to be read.
      *	@return The command string from the stream.
      */
-    protected String read() throws IOException {
-        byte[] buf = new byte[1024];
+    protected String read(int max) throws IOException {
+        byte[] buf = new byte[Math.max(max, 1024)];
         int nBytes = this.in.read(buf);
         return new String(buf, 0, nBytes);
+    }
+
+    /**
+     * Reads the command string from the server connection.
+     * This method will block until the entire string is received from the server.
+     * @return THe command string from the stream.
+     */
+    protected String read() throws IOException {
+        return read(0);
     }
 
 }

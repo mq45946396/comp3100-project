@@ -53,12 +53,13 @@ public class Scheduler {
             // LUCAS: read and parse data response
             String[] data = conn.read().split(" ");
             int numServers = Integer.parseInt(data[1]);
+            int maxLength  = numServers * Integer.parseInt(data[2]);
             conn.send("OK");
 
             Server[] servers = new Server[numServers];
 
             // LUCAS: read server info and store the input servers
-            String[] info = conn.read().split("\n");
+            String[] info = conn.read(maxLength).split("\n");
             for (int i = 0; i < numServers; i++) {
                 // LUCAS: parse data
                 data = info[i].split(" ");
