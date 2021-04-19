@@ -1,2 +1,2 @@
 #/bin/bash
-./demoS1 comp3100.Client -cp ../
+./demoS1_19Apr -cp ../ comp3100.Client
