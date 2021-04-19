@@ -7,6 +7,8 @@ Repository for COMP3100 Project
 |Lucas Turnbull|45947155|[EccentricTortoise](https://github.com/EccentricTortoise)|
 |Elliot Holt|45955964|[AuzEll](https://github.com/AuzEll)|
 
+[Stage 1 Report](Stage 1 Report.pdf)
+
 ## Helpful Links
 [Stage 1 specification (via iLearn)](https://ilearn.mq.edu.au/mod/resource/view.php?id=6384214)
 
