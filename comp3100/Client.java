@@ -17,7 +17,7 @@ public class Client {
     public static void main(String[] args) throws Exception {
 
         // open connection to server
-        Connection conn = new Connection(HOST, PORT);
+        Connection conn = new Connection(HOST, PORT, isNewlineMode(args));
         
         // perform handshake and authentication
         String user = System.getProperty("user.name");
@@ -56,6 +56,15 @@ public class Client {
         // close connection
         conn.end();
         
+    }
+
+    private static boolean isNewlineMode(String[] args) {
+        for(int i = 0; i < args.length; i++) {
+            if(args[i].equals("-n")) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

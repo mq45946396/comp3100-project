@@ -9,10 +9,20 @@ public class Connection {
     private final InputStream in;
     private final OutputStream out;
 
-    public Connection(String host, int port) throws Exception {
+    // newline only
+    private final boolean isNewline;
+    private final BufferedReader newlineReader;
+
+    public Connection(String host, int port, boolean isNewline) throws Exception {
         this.socket = new Socket(host, port);
+        this.isNewline = isNewline;
         this.in = this.socket.getInputStream();
         this.out = this.socket.getOutputStream();
+        if(isNewline) {
+            this.newlineReader = new BufferedReader(new InputStreamReader(this.in));
+        } else {
+            this.newlineReader = null;
+        }
     }
 
     protected boolean performHandshake(String username) throws Exception {
@@ -46,6 +56,11 @@ public class Connection {
      *	@param str The command to send in the stream.
      */
     protected void send(String str) throws IOException {
+        // add newline character to end
+        if(this.isNewline) {
+            str += "\n";
+        }
+        // write bytes out
         byte[] buf = str.getBytes();
         this.out.write(buf);
         this.out.flush();
@@ -64,10 +79,20 @@ public class Connection {
     /**
      *	Reads the command string from the server connection.
      *	This method will block until the entire string is received from the server.
+     *
+     *  NOTE: if max is not set to zero and newline mode is activated, the method
+     *  will NOT delimit messages based on newline, in order to preserve the behaviour
+     *  of the `DATA` command parsing.
+     *
      *  @param max The maximum length of the string to be read.
      *	@return The command string from the stream.
      */
     protected String read(int max) throws IOException {
+        // use buffered reader for newline messages
+        if(this.isNewline && max != 0) {
+            return newlineReader.readLine();
+        }
+        // read all incoming bytes
         byte[] buf = new byte[Math.max(max, 1024)];
         int nBytes = this.in.read(buf);
         return new String(buf, 0, nBytes);
