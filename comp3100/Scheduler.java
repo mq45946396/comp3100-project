@@ -18,10 +18,10 @@ public class Scheduler {
         int disk = Integer.parseInt(args[5]);
 
         // get list of servers and their current status
-        Server[] servers = getAllServers(conn);
+        Server[] servers = getAllServers(conn, cores, memory, disk);
 
         // pick the best server based on availability and core count
-        Server bestServer = pickBestServer(servers, cores, memory, disk);
+        Server bestServer = pickBestServer(servers);
 
         // if a server is picked, send back schedule command
         if(bestServer != null) {
@@ -45,12 +45,12 @@ public class Scheduler {
      * @param conn The connection to read from.
      * @return Array of servers with their data.
      */
-    private static Server[] getAllServers(Connection conn) {
+    private static Server[] getAllServers(Connection conn, int jobCores, int jobMemory, int jobDisk) {
         try {
-            // LUCAS: send GETS command
-            conn.send("GETS All");
+            // send GETS command
+            conn.sendf("GETS Capable %d %d %d", jobCores, jobMemory, jobDisk);
 
-            // LUCAS: read and parse data response
+            // read and parse data response
             String[] data = conn.read().split(" ");
             int numServers = Integer.parseInt(data[1]);
             int maxLength  = numServers * Integer.parseInt(data[2]);
@@ -58,10 +58,10 @@ public class Scheduler {
 
             Server[] servers = new Server[numServers];
 
-            // LUCAS: read server info and store the input servers
+            // read server info and store the input servers
             String[] info = conn.read(maxLength).split("\n");
             for (int i = 0; i < numServers; i++) {
-                // LUCAS: parse data
+                // parse data
                 data = info[i].split(" ");
                 String type = data[0];
                 int id = Integer.parseInt(data[1]);
@@ -69,11 +69,11 @@ public class Scheduler {
                 int cores = Integer.parseInt(data[4]);
                 int mem = Integer.parseInt(data[5]);
                 int disk = Integer.parseInt(data[6]);
-                // LUCAS: initialize server class to store the input server
+                // initialize server class to store the input server
                 servers[i] = new Server(type, id, cores, mem, disk, 0, 0, 0, state, 0);
             }
 
-            // LUCAS: confirm data received and read the final '.' from the server
+            // confirm data received and read the final '.' from the server
             conn.send("OK");
             conn.read();
             return servers;
@@ -94,26 +94,20 @@ public class Scheduler {
      * @param jobDisk The amount of disk usage required by the job.
      * @return The best available server to schedule the job on, or null if none can be found.
      */
-    private static Server pickBestServer(Server[] servers, int jobCores, int jobMemory, int jobDisk) {
-        // LUCAS: if we already know the largest server, skip the process of figuring out which server
-        if(allTimeLargest != null) {
-            return allTimeLargest;
-        }
-
-        // LUCAS: create a list of capable servers by filtering out the incapable and unavailable servers
-        List<Server> filtered = Arrays.asList(servers);
-        filtered = Arrays.asList(filtered.stream().filter(s -> s.core >= jobCores).toArray(Server[]::new));
-        filtered = Arrays.asList(filtered.stream().filter(s -> s.mem >= jobMemory).toArray(Server[]::new));
-        filtered = Arrays.asList(filtered.stream().filter(s -> s.disk >= jobDisk).toArray(Server[]::new));
-        filtered = Arrays.asList(filtered.stream().filter(s -> !s.state.equals("unavailable")).toArray(Server[]::new));
-        // LUCAS: sort the filtered list so that the biggest server is at the start of the list
-        Collections.sort(filtered);
-        if (!filtered.isEmpty()) {
+    private static Server pickBestServer(Server[] servers) {
+        if(allTimeLargest == null) {
+            // sort the filtered list so that the biggest server is at the start of the list
+            List<Server> filtered = Arrays.asList(servers);
+            Collections.sort(filtered);
             allTimeLargest = filtered.get(0);
-            return filtered.get(0);
+        }
+        // pick the first capable server
+        if (servers.length > 0) {
+            return servers[0];
         }
         else {
-            return null;
+            // if there's no capable servers, fall back on the largest
+            return allTimeLargest;
         }
     }
 
