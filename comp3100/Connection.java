@@ -89,7 +89,7 @@ public class Connection {
      */
     protected String read(int max) throws IOException {
         // use buffered reader for newline messages
-        if(this.isNewline && max != 0) {
+        if(this.isNewline && max == 0) {
             return newlineReader.readLine();
         }
         // read all incoming bytes

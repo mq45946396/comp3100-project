@@ -25,3 +25,5 @@ hs_err_pid*
 
 # ds-server
 server/
+*.xml
+!/tests/S1DemoConfigs/*.xml
