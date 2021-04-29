@@ -15,9 +15,19 @@ public class Client {
 //  static final String USER = "dsclient";  // the user name used for authentication
 
     public static void main(String[] args) throws Exception {
+        // load command line arguments and print help if requested
+        Args arg = new Args(args);
+        if(arg.help) {
+            System.out.println("Usage: java [..vm] comp3100.Client [-n|-v|-h]");
+            System.out.println();
+            System.out.println("\t-n : use newline mode");
+            System.out.println("\t-v : use verbose mode (print when job is scheduled)");
+            System.out.println("\t-h : show this help message");
+            return;
+        }
 
         // open connection to server
-        Connection conn = new Connection(HOST, PORT, isNewlineMode(args));
+        Connection conn = new Connection(HOST, PORT, arg.newline);
         
         // perform handshake and authentication
         String user = System.getProperty("user.name");
@@ -42,7 +52,7 @@ public class Client {
                     quit = true;
                     break;
                 case "JOBN":
-                    Scheduler.scheduleJob(conn, params);
+                    Scheduler.scheduleJob(conn, params, arg.verbose);
                     break;
                 case "JCPL":
                     conn.send("REDY");
@@ -58,13 +68,30 @@ public class Client {
         
     }
 
-    private static boolean isNewlineMode(String[] args) {
-        for(int i = 0; i < args.length; i++) {
-            if(args[i].equals("-n")) {
-                return true;
+    static class Args {
+
+        public boolean newline;
+        public boolean verbose;
+        public boolean help;
+
+        private Args(String[] args) {
+            for(String arg : args) {
+                switch(arg.toLowerCase()) {
+                    case "-n":
+                        this.newline = true;
+                        break;
+                    case "-v":
+                        this.verbose = true;
+                        break;
+                    case "-h":
+                        this.help = true;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-        return false;
+
     }
 
 }

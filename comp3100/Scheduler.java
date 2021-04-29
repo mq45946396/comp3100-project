@@ -8,7 +8,7 @@ public class Scheduler {
 
     private static Server allTimeLargest = null;
 
-    public static void scheduleJob(Connection conn, String[] args) throws Exception {
+    public static void scheduleJob(Connection conn, String[] args, boolean verbose) throws Exception {
         // decode job parameters
         int submitTime = Integer.parseInt(args[0]);
         int jobID = Integer.parseInt(args[1]);
@@ -30,9 +30,9 @@ public class Scheduler {
             if(!conn.read().equals("OK")) {
                 throw new RuntimeException("[Job " + jobID + "] Scheduling failed!");
             }
-            System.out.printf("[Job %d] Scheduled on %s (t = %d)\n", jobID, fullServerName, submitTime);
+            if(verbose) System.out.printf("[Job %d] Scheduled on %s (t = %d)\n", jobID, fullServerName, submitTime);
         } else {
-            System.out.printf("[Job %d] Could not find server to schedule!\n", jobID);
+            if(verbose) System.out.printf("[Job %d] Could not find server to schedule!\n", jobID);
         }
 
         // indicate that we are ready for more work

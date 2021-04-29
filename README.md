@@ -24,6 +24,15 @@ $ ds-server    # start a ds-server instance
 $ ./run.sh     # run the client
 ```
 
+Command line usage
+```
+Usage: java [..vm] comp3100.Client [-n|-v|-h]
+
+        -n : use newline mode
+        -v : use verbose mode (print when job is scheduled)
+        -h : show this help message
+```
+
 To remove built class files from the project:
 ```sh
 $ make clean
