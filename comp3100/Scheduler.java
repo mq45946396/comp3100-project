@@ -3,10 +3,11 @@ package comp3100;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.HashMap;
 
 public class Scheduler {
 
-    private static Server allTimeLargest = null;
+    private static final HashMap<String, Integer> totalCores = new HashMap<String, Integer>();
 
     public static void scheduleJob(Connection conn, String[] args, boolean verbose) throws Exception {
         // decode job parameters
@@ -25,7 +26,7 @@ public class Scheduler {
 
         // if a server is picked, send back schedule command
         if(bestServer != null) {
-            String fullServerName = bestServer.type + " " + bestServer.id;
+            String fullServerName = bestServer.getServerName();
             conn.sendf("SCHD %d %s", jobID, fullServerName);
             if(!conn.read().equals("OK")) {
                 throw new RuntimeException("[Job " + jobID + "] Scheduling failed!");
@@ -95,26 +96,31 @@ public class Scheduler {
      * @return The best available server to schedule the job on, or null if none can be found.
      */
     private static Server pickBestServer(Server[] servers, int jobCores, int jobMemory, int jobDisk) {
-        // LUCAS: if we already know the largest server, skip the process of figuring out which server
-        if(allTimeLargest != null) {
-            return allTimeLargest;
+        // populate the map of total cores before scheduling any jobs
+        if(totalCores.isEmpty()) {
+            for(Server s : servers) {
+                totalCores.put(s.getServerName(), s.cores);
+            }
         }
 
-        // LUCAS: create a list of capable servers by filtering out the incapable and unavailable servers
-        List<Server> filtered = Arrays.asList(servers);
-        filtered = Arrays.asList(filtered.stream().filter(s -> s.core >= jobCores).toArray(Server[]::new));
-        filtered = Arrays.asList(filtered.stream().filter(s -> s.mem >= jobMemory).toArray(Server[]::new));
-        filtered = Arrays.asList(filtered.stream().filter(s -> s.disk >= jobDisk).toArray(Server[]::new));
-        filtered = Arrays.asList(filtered.stream().filter(s -> !s.state.equals("unavailable")).toArray(Server[]::new));
-        // LUCAS: sort the filtered list so that the biggest server is at the start of the list
-        Collections.sort(filtered);
-        if (!filtered.isEmpty()) {
-            allTimeLargest = filtered.get(0);
-            return filtered.get(0);
+        // sort the server list by the difference of the core count, descending order
+        List<Server> serverList = Arrays.asList(servers);
+        Collections.sort(serverList, (a, b) -> {
+            int diffA = Math.abs(a.cores - jobCores);
+            int diffB = Math.abs(b.cores - jobCores);
+            return diffB - diffA;
+        });
+
+        // check if server has enough cores
+        if(serverList.get(0).cores >= jobCores) {
+            return serverList.get(0);
         }
-        else {
-            return null;
-        }
+
+        // otherwise allocate it to the largest overall server
+        Collections.sort(serverList, (a, b) -> {
+            return totalCores.get(b.getServerName()) - totalCores.get(a.getServerName());
+        });
+        return serverList.get(0);
     }
 
 }

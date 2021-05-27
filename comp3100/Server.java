@@ -34,4 +34,8 @@ public class Server implements Comparable<Server>{
         return s.core-this.core;
     }
 
+    public String getServerName() {
+        return this.type + " " + this.id;
+    }
+
 }
