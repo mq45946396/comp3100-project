@@ -3,11 +3,13 @@ package comp3100;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.HashMap;
 
 public class Scheduler {
 
     private static final HashMap<String, Integer> totalCores = new HashMap<String, Integer>();
+    private static Server allTimeLargest = null;
 
     public static void scheduleJob(Connection conn, String[] args, boolean verbose) throws Exception {
         // decode job parameters
@@ -28,10 +30,15 @@ public class Scheduler {
         if(bestServer != null) {
             String fullServerName = bestServer.getServerName();
             conn.sendf("SCHD %d %s", jobID, fullServerName);
-            if(!conn.read().equals("OK")) {
+            String resp = conn.read();
+            if(!resp.equals("OK")) {
+                if(verbose) {
+                    String schd = String.format("SCHD %d %s", jobID, fullServerName);
+                    System.err.printf("[SERVER] %s\n\tSchedule command: %s\n\tJob details: c = %d m = %d d = %d\n\n", resp, schd, cores, memory, disk);
+                }
                 throw new RuntimeException("[Job " + jobID + "] Scheduling failed!");
             }
-            if(verbose) System.out.printf("[Job %d] Scheduled on %s (t = %d)\n", jobID, fullServerName, submitTime);
+            if(verbose) System.out.printf("[Job %d] Scheduled on %s (t = %d, jc = %d, sc = %d)\n", jobID, fullServerName, submitTime, cores, bestServer.core);
         } else {
             if(verbose) System.out.printf("[Job %d] Could not find server to schedule!\n", jobID);
         }
@@ -96,27 +103,40 @@ public class Scheduler {
      * @return The best available server to schedule the job on, or null if none can be found.
      */
     private static Server pickBestServer(Server[] servers, int jobCores, int jobMemory, int jobDisk) {
-        // populate the map of total cores before scheduling any jobs
+        // populate the map of total cores before scheduling any jobs and
+        // find the largest server
         if(totalCores.isEmpty()) {
             for(Server s : servers) {
-                totalCores.put(s.getServerName(), s.cores);
+                totalCores.put(s.getServerName(), s.core);
+                if(allTimeLargest == null || s.core > allTimeLargest.core) {
+                    allTimeLargest = s;
+                }
             }
         }
 
-        // sort the server list by the difference of the core count, descending order
+        // remove any servers which do not meet the memory or disk requirement
         List<Server> serverList = Arrays.asList(servers);
+        serverList = serverList.stream().filter((s) -> {
+            return s.mem >= jobMemory && s.disk >= jobDisk;
+        }).collect(Collectors.toList());
+
+        // if no servers match criteria just schedule to largest
+        if(serverList.isEmpty()) return allTimeLargest;
+
+        // sort the servers by the difference of job cores and available cores (ascending)
         Collections.sort(serverList, (a, b) -> {
-            int diffA = Math.abs(a.cores - jobCores);
-            int diffB = Math.abs(b.cores - jobCores);
-            return diffB - diffA;
+            int diffA = Math.abs(a.core - jobCores);
+            int diffB = Math.abs(b.core - jobCores);
+            return diffA - diffB;
         });
 
         // check if server has enough cores
-        if(serverList.get(0).cores >= jobCores) {
+        if(serverList.get(0).core >= jobCores) {
             return serverList.get(0);
         }
 
-        // otherwise allocate it to the largest overall server
+        // otherwise allocate it to the largest overall server by sorting by
+        // core count (descending order)
         Collections.sort(serverList, (a, b) -> {
             return totalCores.get(b.getServerName()) - totalCores.get(a.getServerName());
         });

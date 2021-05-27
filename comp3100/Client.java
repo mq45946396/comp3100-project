@@ -55,6 +55,12 @@ public class Client {
                     Scheduler.scheduleJob(conn, params, arg.verbose);
                     break;
                 case "JCPL":
+                    if(arg.verbose) {
+                        int time  = Integer.parseInt(params[0]);
+                        int jobID = Integer.parseInt(params[1]);
+                        String sn = params[2] + " " + params[3];
+                        System.out.printf("[Job %d] Completed running job (t = %d, s = %s)\n", jobID, time, sn); 
+                    }
                     conn.send("REDY");
                     break;
                 default:
