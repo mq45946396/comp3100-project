@@ -2,6 +2,7 @@ package comp3100;
 
 public class Server implements Comparable<Server>{
     private static final String INACTIVE = "inactive";
+    private static final String BOOTING = "booting";
 
     public String type = "";
     public int id = 0;
@@ -36,6 +37,10 @@ public class Server implements Comparable<Server>{
 
     public String getServerName() {
         return this.type + " " + this.id;
+    }
+
+    public int getBootingBias() {
+        return this.state.equals(BOOTING) ? 2 : 1;
     }
 
 }

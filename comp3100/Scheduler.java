@@ -93,9 +93,7 @@ public class Scheduler {
     }
 
     /**
-     * Chooses the most appropriate server for the given job (allToLargest). It should skip any servers
-     * which do not meet the minimum requirements, and then return the server with the highest
-     * core count.
+     * Chooses the most appropriate server for the given job.
      * @param servers The list of servers to choose from.
      * @param jobCores The number of cores required by the job.
      * @param jobMemory The amount of memory required by the job.
@@ -124,9 +122,10 @@ public class Scheduler {
         if(serverList.isEmpty()) return allTimeLargest;
 
         // sort the servers by the difference of job cores and available cores (ascending)
+        // also creates a bias for the difference if the server is currently booting
         Collections.sort(serverList, (a, b) -> {
-            int diffA = Math.abs(a.core - jobCores);
-            int diffB = Math.abs(b.core - jobCores);
+            int diffA = Math.abs(a.core - jobCores) / a.getBootingBias();
+            int diffB = Math.abs(b.core - jobCores) / b.getBootingBias();
             return diffA - diffB;
         });
 

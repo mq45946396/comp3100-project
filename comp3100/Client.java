@@ -12,7 +12,6 @@ public class Client {
 
     static final String HOST = "localhost"; // the host address of the server
     static final int    PORT = 50000;       // the TCP port of the server
-//  static final String USER = "dsclient";  // the user name used for authentication
 
     public static void main(String[] args) throws Exception {
         // load command line arguments and print help if requested
