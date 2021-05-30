@@ -19,7 +19,7 @@ Repository for COMP3100 Project
 ```sh
 $ git clone https://github.com/mq45946396/comp3100-project.git
 $ cd comp3100-project
-$ make         # compile all Java classes
+$ ./compile.sh # compile all Java classes
 $ ds-server    # start a ds-server instance
 $ ./run.sh     # run the client
 ```
@@ -38,9 +38,9 @@ To remove built class files from the project:
 $ make clean
 ```
 
-To run the automated test files:
+To run the automated test files (stage 1):
 ```sh
-$ make
-$ cd tests
+$ ./compile.sh
+$ cd tests-s1
 $ ./run-test.sh
 ```
